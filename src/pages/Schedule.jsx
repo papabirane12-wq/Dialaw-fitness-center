@@ -27,7 +27,7 @@ export default function Schedule() {
             Créneaux & Cours Collectifs
           </h1>
           <p className="text-slate-400 text-xs mt-1">
-            Réservez votre place en temps réel parmi nos séances encadrées par des coachs diplômés.
+            Réservez votre place en temps réel pour vos séances encadrées par Coach Matar à Yenne.
           </p>
         </div>
 

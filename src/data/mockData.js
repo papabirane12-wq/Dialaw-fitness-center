@@ -7,10 +7,10 @@ export const MOCK_SERVICES = [
     billing: '/ séance',
     badge: 'Populaire',
     popular: false,
-    description: 'Accès ponctuel sans engagement pour un coaching individuel ou un cours collectif au choix.',
+    description: 'Accès ponctuel sans engagement pour un coaching individuel ou un cours collectif au choix avec Coach Matar.',
     features: [
-      'Accès à 1 séance au choix (Coaching ou Cours)',
-      'Accès aux vestiaires & douches',
+      'Accès à 1 séance au choix avec Coach Matar',
+      'Accès aux vestiaires & équipements de la salle',
       'Bilan forme rapide (10 min)',
       'Valable 30 jours après achat'
     ],
@@ -24,13 +24,13 @@ export const MOCK_SERVICES = [
     billing: '/ mois',
     badge: 'Recommandé',
     popular: true,
-    description: 'La formule idéale pour s\'entraîner en toute liberté avec accès complet aux installations.',
+    description: 'La formule idéale pour s\'entraîner en toute liberté avec accès complet aux installations de Dialaw Fitness.',
     features: [
       'Accès illimité aux équipements 7j/7 (08h-22h)',
-      '2 cours collectifs inclus par semaine',
+      'Cours collectifs animés par Coach Matar',
       'Application Espace Client & Suivi',
       'Sans engagement de durée (résiliation 1 clic)',
-      'Serviette & Boissons incluses'
+      'Suivi de progression'
     ],
     cta: 'Souscrire l\'abonnement'
   },
@@ -42,13 +42,13 @@ export const MOCK_SERVICES = [
     billing: '/ mois',
     badge: 'Exclusif',
     popular: false,
-    description: 'Prise en charge à 360° avec votre coach dédié pour des résultats optimaux et rapides.',
+    description: 'Prise en charge à 360° en direct avec Coach Matar pour des résultats rapides et durables.',
     features: [
       'Accès illimité 7j/7 (08h-22h)',
-      '1 séance de Coaching Privé 1-sur-1 par semaine',
+      '1 séance de Coaching Privé 1-sur-1 par semaine avec Matar',
       'Plan nutritionnel sur-mesure mis à jour mensuellement',
       'Analyse corporelle InBody toutes les 2 semaines',
-      'Accès prioritaire à tous les cours collectifs',
+      'Accès prioritaire à toutes les sessions',
       'Garantie satisfaction sous 14 jours'
     ],
     cta: 'Devenir membre VIP'
@@ -57,56 +57,29 @@ export const MOCK_SERVICES = [
 
 export const MOCK_COACHES = [
   {
-    id: 'coach-marc',
-    name: 'Marc Diallo',
-    role: 'Fondateur & Head Coach',
-    specialties: ['Musculation & Force', 'Hypertrophie', 'Recomposition Corporelle'],
-    experience: '10 ans d\'expérience',
-    bio: 'Ancien athlète de haut niveau, Marc a fondé Dialaw Fitness Center avec la vision d\'offrir un accompagnement scientifique et sur-mesure.',
-    avatar: 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=500&auto=format&fit=crop&q=80',
-    rating: 4.9,
-    clientsCount: 85
-  },
-  {
-    id: 'coach-sarah',
-    name: 'Sarah Benali',
-    role: 'Coach Yoga & Mobilité',
-    specialties: ['Vinyasa Yoga', 'Pilates', 'Stretching & Posture'],
-    experience: '7 ans d\'expérience',
-    bio: 'Spécialiste de la santé articulaire et de la gestion du stress par le mouvement conscient et la respiration.',
-    avatar: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=500&auto=format&fit=crop&q=80',
+    id: 'coach-matar',
+    name: 'Coach Matar',
+    role: 'Fondateur & Coach Principal',
+    specialties: ['Musculation & Force', 'Cross-Training & HIIT', 'Prépa Physique & Conditioning', 'Coaching Privé 1-on-1'],
+    experience: 'Expert Certifié — Yenne',
+    bio: 'Fondateur et coach unique de Dialaw Fitness Center à Yenne. Matar combine rigueur athlétique, préparation physique et motivation constante pour vous guider vers vos objectifs.',
+    avatar: '/images/coach-matar-3.jpg',
+    gallery: [
+      '/images/coach-matar-3.jpg',
+      '/images/coach-matar-1.jpg',
+      '/images/coach-matar-4.jpg',
+      '/images/coach-matar-5.jpg',
+      '/images/coach-matar-2.jpg'
+    ],
     rating: 5.0,
-    clientsCount: 62
-  },
-  {
-    id: 'coach-thomas',
-    name: 'Thomas Leroy',
-    role: 'Coach Cross-Training & HIIT',
-    specialties: ['Cross-Training', 'Cardio Brûle-Graisse', 'Conditionnement Physique'],
-    experience: '6 ans d\'expérience',
-    bio: 'Passionné d\'entraînement haute intensité, Thomas vous pousse à dépasser vos limites dans une ambiance électrisante.',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80',
-    rating: 4.85,
-    clientsCount: 74
-  },
-  {
-    id: 'coach-amadou',
-    name: 'Amadou Sow',
-    role: 'Coach Boxe & Prépa Physique',
-    specialties: ['Boxe Anglaise', 'Reflexes & Agilité', 'Renforcement Spécifique'],
-    experience: '8 ans d\'expérience',
-    bio: 'Combattant chevronné, Amadou combine techniques de combat et préparation physique moderne pour sculpter votre mental et votre corps.',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80',
-    rating: 4.95,
-    clientsCount: 50
+    clientsCount: 180
   }
 ];
 
 export const MOCK_CATEGORIES = [
   { id: 'coaching-prive', name: 'Coaching Personnalisé (1-on-1)', icon: 'UserCheck' },
   { id: 'cross-training', name: 'Cross-Training & HIIT', icon: 'Flame' },
-  { id: 'yoga-pilates', name: 'Yoga & Pilates', icon: 'Heart' },
-  { id: 'boxe-cardio', name: 'Boxe & Conditionnement', icon: 'Target' },
+  { id: 'boxe-cardio', name: 'Prépa Physique & Boxe', icon: 'Target' },
   { id: 'muscu-libre', name: 'Accès Libre Musculation', icon: 'Dumbbell' }
 ];
 
@@ -114,86 +87,72 @@ export const MOCK_SLOTS = [
   {
     id: 'slot-101',
     category: 'coaching-prive',
-    title: 'Coaching Musculation Personnalisé',
-    coachId: 'coach-marc',
-    coachName: 'Marc Diallo',
+    title: 'Coaching Musculation & Force Privé',
+    coachId: 'coach-matar',
+    coachName: 'Coach Matar',
     day: 'Lundi',
     date: '2026-08-24',
     time: '09:00 - 10:00',
     spotsTotal: 1,
     spotsLeft: 1,
-    location: 'Plateau Haltérophilie',
+    location: 'Plateau Haltérophilie Dialaw Fitness',
     level: 'Tous niveaux'
   },
   {
     id: 'slot-102',
     category: 'cross-training',
-    title: 'HIIT Extreme & Cardio Blast',
-    coachId: 'coach-thomas',
-    coachName: 'Thomas Leroy',
+    title: 'Cross-Training & HIIT Extreme',
+    coachId: 'coach-matar',
+    coachName: 'Coach Matar',
     day: 'Lundi',
     date: '2026-08-24',
-    time: '12:30 - 13:15',
+    time: '17:30 - 18:30',
     spotsTotal: 12,
     spotsLeft: 3,
     location: 'Zone Cross-Training',
-    level: 'Intermédiaire'
+    level: 'Tous niveaux'
   },
   {
     id: 'slot-103',
-    category: 'yoga-pilates',
-    title: 'Vinyasa Flow & Mobilité',
-    coachId: 'coach-sarah',
-    coachName: 'Sarah Benali',
-    day: 'Lundi',
-    date: '2026-08-24',
-    time: '18:00 - 19:00',
-    spotsTotal: 15,
-    spotsLeft: 5,
-    location: 'Studio Zen',
+    category: 'boxe-cardio',
+    title: 'Conditionnement & Cardio Plage / Extérieur',
+    coachId: 'coach-matar',
+    coachName: 'Coach Matar',
+    day: 'Mardi',
+    date: '2026-08-25',
+    time: '08:30 - 09:30',
+    spotsTotal: 10,
+    spotsLeft: 4,
+    location: 'Zone Extérieure & Plage de Yenne',
     level: 'Tous niveaux'
   },
   {
     id: 'slot-104',
-    category: 'boxe-cardio',
-    title: 'Boxing Fit & Sparring Condition',
-    coachId: 'coach-amadou',
-    coachName: 'Amadou Sow',
-    day: 'Mardi',
-    date: '2026-08-25',
-    time: '19:00 - 20:00',
-    spotsTotal: 10,
-    spotsLeft: 2,
-    location: 'Ring & Sacs de frappe',
+    category: 'coaching-prive',
+    title: 'Coaching Bilan & Recomposition Corporelle',
+    coachId: 'coach-matar',
+    coachName: 'Coach Matar',
+    day: 'Mercredi',
+    date: '2026-08-26',
+    time: '15:00 - 16:00',
+    spotsTotal: 1,
+    spotsLeft: 1,
+    location: 'Salle Dialaw Fitness Yenne',
     level: 'Tous niveaux'
   },
   {
     id: 'slot-105',
-    category: 'coaching-prive',
-    title: 'Coaching Bilan & Recomposition',
-    coachId: 'coach-marc',
-    coachName: 'Marc Diallo',
-    day: 'Mercredi',
-    date: '2026-08-26',
-    time: '14:00 - 15:00',
-    spotsTotal: 1,
-    spotsLeft: 1,
-    location: 'Cabine Bilan InBody',
-    level: 'Tous niveaux'
-  },
-  {
-    id: 'slot-106',
     category: 'cross-training',
-    title: 'WOD Power & Endurance',
-    coachId: 'coach-thomas',
-    coachName: 'Thomas Leroy',
+    title: 'Renforcement Musculaire & Power WOD',
+    coachId: 'coach-matar',
+    coachName: 'Coach Matar',
     day: 'Jeudi',
     date: '2026-08-27',
-    time: '18:30 - 19:30',
+    time: '18:00 - 19:00',
     spotsTotal: 12,
-    spotsLeft: 4,
-    location: 'Zone Cross-Training',
-    level: 'Avancé'
+    spotsLeft: 2,
+    location: 'Studio Principal',
+    level: 'Tous niveaux'
   }
 ];
 
@@ -215,34 +174,34 @@ export const MOCK_CLIENT_PROFILE = {
   upcomingBookings: [
     {
       id: 'bkg-901',
-      title: 'Coaching Musculation Personnalisé',
-      coachName: 'Marc Diallo',
+      title: 'Coaching Musculation & Force Privé',
+      coachName: 'Coach Matar',
       date: '2026-08-24',
       time: '09:00 - 10:00',
-      location: 'Plateau Haltérophilie',
+      location: 'Plateau Haltérophilie Dialaw Fitness',
       status: 'Confirmée'
     },
     {
       id: 'bkg-902',
-      title: 'Vinyasa Flow & Mobilité',
-      coachName: 'Sarah Benali',
-      date: '2026-08-28',
-      time: '18:00 - 19:00',
-      location: 'Studio Zen',
+      title: 'Conditionnement & Cardio Plage',
+      coachName: 'Coach Matar',
+      date: '2026-08-25',
+      time: '08:30 - 09:30',
+      location: 'Zone Extérieure & Plage de Yenne',
       status: 'Confirmée'
     }
   ],
   activeProgram: {
-    title: 'Programme Hypertrophie & Recomposition (Semaine 3/6)',
-    coach: 'Marc Diallo',
-    objective: 'Gain de masse sèche & gain de force athlétique',
+    title: 'Programme Force & Recomposition (Semaine 3/6)',
+    coach: 'Coach Matar',
+    objective: 'Gain de masse sèche & puissance athlétique',
     progressPercent: 65,
     days: [
       {
         dayTitle: 'Jour 1 — Pecs / Triceps & Épaules',
         completed: true,
         exercises: [
-          { name: 'Développé Couché à la barre', sets: '4 séries', reps: '8-10 reps @ 80kg', note: 'Repos 90s entre les séries' },
+          { name: 'Développé Couché à la barre', sets: '4 séries', reps: '8-10 reps @ 80kg', note: 'Consignes de Matar : Repos 90s' },
           { name: 'Développé Incliné Halteres', sets: '3 séries', reps: '10-12 reps @ 26kg', note: 'Focus sur l\'étirement' },
           { name: 'Dips lestés', sets: '3 séries', reps: '10 reps @ +10kg', note: 'Buste légèrement penché' },
           { name: 'Élévations Latérales Poulie', sets: '4 séries', reps: '15 reps @ 12kg', note: 'Contrôle à la descente' }
@@ -306,7 +265,7 @@ export const MOCK_CLIENT_PROFILE = {
     {
       id: 'INV-2026-0615',
       date: '15/06/2026',
-      description: 'Pass Séance d\'Essai Coaching Privé',
+      description: 'Pass Séance Coaching Privé avec Matar',
       amount: 10000,
       formattedAmount: '10 000 FCFA',
       status: 'Payée',
@@ -330,11 +289,11 @@ export const MOCK_ADMIN_STATS = {
     { id: 'tx-505', clientName: 'David Moreau', plan: 'Pass Séance', amount: 10000, formattedAmount: '10 000 FCFA', date: '2026-08-17 08:30', status: 'Refunded' }
   ],
   membersList: [
-    { id: 'usr-1', name: 'Alex Dupont', email: 'alex.dupont@email.fr', plan: 'VIP Elite', status: 'Actif', coachAssigned: 'Marc Diallo', joinedDate: '15/06/2026' },
-    { id: 'usr-2', name: 'Julie Martin', email: 'julie.m@email.fr', plan: 'Flex', status: 'Actif', coachAssigned: 'Sarah Benali', joinedDate: '02/07/2026' },
-    { id: 'usr-3', name: 'Karim Ndiaye', email: 'k.ndiaye@gmail.com', plan: 'Pass Séance', status: 'Occasionnel', coachAssigned: 'Amadou Sow', joinedDate: '10/08/2026' },
-    { id: 'usr-4', name: 'Sophie Bernard', email: 'sophie.b@outook.com', plan: 'Flex', status: 'Actif', coachAssigned: 'Thomas Leroy', joinedDate: '20/05/2026' },
-    { id: 'usr-5', name: 'Lucas Petit', email: 'l.petit@yahoo.fr', plan: 'VIP Elite', status: 'Actif', coachAssigned: 'Marc Diallo', joinedDate: '11/04/2026' }
+    { id: 'usr-1', name: 'Alex Dupont', email: 'alex.dupont@email.fr', plan: 'VIP Elite', status: 'Actif', coachAssigned: 'Coach Matar', joinedDate: '15/06/2026' },
+    { id: 'usr-2', name: 'Julie Martin', email: 'julie.m@email.fr', plan: 'Flex', status: 'Actif', coachAssigned: 'Coach Matar', joinedDate: '02/07/2026' },
+    { id: 'usr-3', name: 'Karim Ndiaye', email: 'k.ndiaye@gmail.com', plan: 'Pass Séance', status: 'Occasionnel', coachAssigned: 'Coach Matar', joinedDate: '10/08/2026' },
+    { id: 'usr-4', name: 'Sophie Bernard', email: 'sophie.b@outook.com', plan: 'Flex', status: 'Actif', coachAssigned: 'Coach Matar', joinedDate: '20/05/2026' },
+    { id: 'usr-5', name: 'Lucas Petit', email: 'l.petit@yahoo.fr', plan: 'VIP Elite', status: 'Actif', coachAssigned: 'Coach Matar', joinedDate: '11/04/2026' }
   ]
 };
 
@@ -342,17 +301,17 @@ export const MOCK_TESTIMONIALS = [
   {
     id: 1,
     name: 'Émilie R.',
-    role: 'Membre VIP Elite depuis 8 mois',
-    quote: 'J\'ai perdu 12 kg tout en gagnant en masse musculaire grâce au programme de Marc. L\'ambiance au club est chaleureuse et les équipements sont au top !',
+    role: 'Membre VIP Elite à Yenne',
+    quote: 'J\'ai perdu 12 kg tout en gagnant en masse musculaire grâce aux conseils et à la rigueur de Coach Matar. L\'ambiance à la salle de Yenne est formidable !',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
     stars: 5,
-    result: '-12kg en 8 mois'
+    result: '-12kg avec Coach Matar'
   },
   {
     id: 2,
     name: 'Romain B.',
     role: 'Adepte du Cross-Training',
-    quote: 'Les cours de HIIT avec Thomas sont incroyables. On se dépense à fond dans un cadre motivant. Le système de réservation en ligne est hyper simple.',
+    quote: 'Les séances de HIIT et de préparation physique sur la plage avec Matar sont exceptionnelles. On se dépense à fond dans un cadre unique.',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
     stars: 5,
     result: '+15% d\'endurance'
@@ -361,25 +320,25 @@ export const MOCK_TESTIMONIALS = [
     id: 3,
     name: 'Clara M.',
     role: 'Membre Abonnement Flex',
-    quote: 'Les cours de Yoga de Sarah m\'ont permis d\'éliminer le mal de dos lié au travail de bureau. Espace ultra propre et équipe au petit soin.',
+    quote: 'Coach Matar m\'a permis d\'éliminer mes maux de dos et de retrouver une super condition physique. La salle Dialaw Fitness est très bien équipée.',
     avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80',
     stars: 5,
-    result: 'Posture rétablie'
+    result: 'Forme & posture retrouvées'
   }
 ];
 
 export const MOCK_FAQS = [
   {
+    question: 'Qui assure les coachings à Dialaw Fitness Center Yenne ?',
+    answer: 'Coach Matar est le fondateur et coach principal unique de la salle. Il assure personnellement l\'ensemble des séances de coaching individuel, des bilans de forme et des cours collectifs.'
+  },
+  {
     question: 'Quels sont les horaires d\'ouverture de Dialaw Fitness Center à Yenne ?',
-    answer: 'La salle est accessible 7j/7 de 08h00 à 22h00. L\'encadrement par nos coachs est assuré tout au long de la journée pour vos séances individuelles et cours collectifs.'
+    answer: 'La salle est ouverte 7j/7 de 08h00 à 22h00. Coach Matar vous accueille et vous encadre tout au long de la journée.'
   },
   {
     question: 'Où se situe le centre et comment réserver ?',
-    answer: 'Dialaw Fitness Center est situé à Yenne (Sénégal). Vous pouvez réserver votre séance directement sur ce site ou contacter notre équipe par téléphone au +221 77 060 47 07.'
-  },
-  {
-    question: 'Puis-je modifier ou annuler une réservation ?',
-    answer: 'Oui ! Depuis votre Espace Client, vous pouvez annuler ou reporter un créneau sans aucun frais jusqu\'à 4 heures avant le début de la séance.'
+    answer: 'Dialaw Fitness Center est situé à Yenne (Sénégal). Vous pouvez réserver votre séance directement sur ce site ou contacter Coach Matar par téléphone au +221 77 060 47 07.'
   },
   {
     question: 'Est-il possible de résilier l\'abonnement mensuel ?',
