@@ -6,7 +6,6 @@ import { MOCK_COACHES, MOCK_TESTIMONIALS, MOCK_FAQS, MOCK_SERVICES } from '../da
 export default function Home({ setActivePage }) {
   const { openBookingModal, openCheckoutModal } = useAuth();
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
-  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
   const matar = MOCK_COACHES[0];
 
@@ -72,7 +71,7 @@ export default function Home({ setActivePage }) {
 
             </div>
 
-            {/* Hero Visual Card — Real Photo of Coach Matar in Dialaw Fitness Gym */}
+            {/* Hero Visual Card — Photo 2: Coach Matar standing in Dialaw Fitness Gym */}
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl overflow-hidden border border-[#2F333B] shadow-2xl group">
                 <img
@@ -158,7 +157,7 @@ export default function Home({ setActivePage }) {
         </div>
       </section>
 
-      {/* COACH MATAR FEATURED GALLERY SECTION */}
+      {/* COACH MATAR SECTION — Photo 4 (Outdoor Beach Conditioning) ONLY */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="dark-panel p-8 sm:p-12 rounded-3xl border border-[#2F333B] space-y-10">
           
@@ -183,35 +182,15 @@ export default function Home({ setActivePage }) {
             </button>
           </div>
 
-          {/* Gallery Main Spotlight */}
+          {/* Photo 4 Spotlight (Outdoor/Beach Conditioning), Photos 1, 2, 3, 5 removed from this section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-6 space-y-4">
-              <div className="relative rounded-2xl overflow-hidden h-96 border border-[#2F333B] shadow-2xl">
+            <div className="lg:col-span-6">
+              <div className="relative rounded-2xl overflow-hidden h-[450px] border border-[#2F333B] shadow-2xl">
                 <img
-                  src={matar.gallery[activePhotoIndex]}
-                  alt="Coach Matar"
-                  className="w-full h-full object-cover transition-all duration-500"
+                  src="/images/coach-matar-5.jpg"
+                  alt="Coach Matar — Préparation Physique & Conditioning"
+                  className="w-full h-full object-cover object-center"
                 />
-                <div className="absolute top-3 left-3 bg-[#121315]/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-[#FF4D17] flex items-center gap-1.5 border border-[#FF4D17]/30">
-                  <Award className="w-3.5 h-3.5" /> Photo {activePhotoIndex + 1} / {matar.gallery.length}
-                </div>
-              </div>
-
-              {/* Thumbnails Row */}
-              <div className="flex items-center gap-3 overflow-x-auto pb-2">
-                {matar.gallery.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActivePhotoIndex(idx)}
-                    className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${
-                      activePhotoIndex === idx
-                        ? 'border-[#FF4D17] scale-105 shadow-md shadow-[#FF4D17]/30'
-                        : 'border-[#2F333B] opacity-60 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={img} alt={`Coach Matar ${idx + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
               </div>
             </div>
 
