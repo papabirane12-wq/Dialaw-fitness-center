@@ -63,13 +63,9 @@ export const MOCK_COACHES = [
     specialties: ['Musculation & Force', 'Cross-Training & HIIT', 'Prépa Physique & Conditioning', 'Coaching Privé 1-on-1'],
     experience: 'Expert Certifié — Yenne',
     bio: 'Fondateur et coach unique de Dialaw Fitness Center à Yenne. Matar combine rigueur athlétique, préparation physique et motivation constante pour vous guider vers vos objectifs.',
-    avatar: '/images/coach-matar-3.jpg',
+    avatar: '/images/coach-matar-1.jpg',
     gallery: [
-      '/images/coach-matar-3.jpg',
-      '/images/coach-matar-1.jpg',
-      '/images/coach-matar-4.jpg',
-      '/images/coach-matar-5.jpg',
-      '/images/coach-matar-2.jpg'
+      '/images/coach-matar-1.jpg'
     ],
     rating: 5.0,
     clientsCount: 180
@@ -95,7 +91,7 @@ export const MOCK_SLOTS = [
     time: '09:00 - 10:00',
     spotsTotal: 1,
     spotsLeft: 1,
-    location: 'Plateau Haltérophilie Dialaw Fitness',
+    location: 'Plateau Haltérophilie Dialaw Fitness',
     level: 'Tous niveaux'
   },
   {
@@ -311,7 +307,7 @@ export const MOCK_TESTIMONIALS = [
     id: 2,
     name: 'Romain B.',
     role: 'Adepte du Cross-Training',
-    quote: 'Les séances de HIIT et de préparation physique sur la plage avec Matar sont exceptionnelles. On se dépense à fond dans un cadre unique.',
+    quote: 'Les séances de HIIT et de préparation physique avec Matar sont exceptionnelles. On se dépense à fond dans un cadre unique.',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
     stars: 5,
     result: '+15% d\'endurance'
