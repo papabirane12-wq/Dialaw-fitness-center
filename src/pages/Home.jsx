@@ -6,6 +6,7 @@ import { MOCK_COACHES, MOCK_TESTIMONIALS, MOCK_FAQS, MOCK_SERVICES } from '../da
 export default function Home({ setActivePage }) {
   const { openBookingModal, openCheckoutModal } = useAuth();
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
   const matar = MOCK_COACHES[0];
 
@@ -71,12 +72,12 @@ export default function Home({ setActivePage }) {
 
             </div>
 
-            {/* Hero Visual Card — Coach Matar Photo */}
+            {/* Hero Visual Card — Real Photo of Coach Matar at Squat Rack */}
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl overflow-hidden border border-[#2F333B] shadow-2xl group">
                 <img
                   src="/images/coach-matar-1.jpg"
-                  alt="Coach Matar — Dialaw Fitness Center Yenne"
+                  alt="Coach Matar à Dialaw Fitness Center Yenne"
                   className="w-full h-[520px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121315] via-transparent to-transparent"></div>
@@ -141,7 +142,7 @@ export default function Home({ setActivePage }) {
             </div>
             <h3 className="text-lg font-bold text-white font-heading">Prépa Physique & Conditioning</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Sessions de conditionnement physique pour développer votre endurance et votre explosivité.
+              Sessions de conditionnement physique en salle et à l'extérieur pour développer votre endurance.
             </p>
           </div>
 
@@ -157,7 +158,7 @@ export default function Home({ setActivePage }) {
         </div>
       </section>
 
-      {/* COACH MATAR FEATURED SECTION (CLEAN SINGLE PHOTO ONLY) */}
+      {/* COACH MATAR FEATURED GALLERY SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="dark-panel p-8 sm:p-12 rounded-3xl border border-[#2F333B] space-y-10">
           
@@ -182,15 +183,35 @@ export default function Home({ setActivePage }) {
             </button>
           </div>
 
-          {/* Single Photo Spotlight (Rest of gallery removed) */}
+          {/* Gallery Main Spotlight */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-6">
-              <div className="relative rounded-2xl overflow-hidden h-[450px] border border-[#2F333B] shadow-2xl">
+            <div className="lg:col-span-6 space-y-4">
+              <div className="relative rounded-2xl overflow-hidden h-96 border border-[#2F333B] shadow-2xl">
                 <img
-                  src="/images/coach-matar-1.jpg"
-                  alt="Coach Matar — Dialaw Fitness Center Yenne"
-                  className="w-full h-full object-cover object-center"
+                  src={matar.gallery[activePhotoIndex]}
+                  alt="Coach Matar"
+                  className="w-full h-full object-cover transition-all duration-500"
                 />
+                <div className="absolute top-3 left-3 bg-[#121315]/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-[#FF4D17] flex items-center gap-1.5 border border-[#FF4D17]/30">
+                  <Award className="w-3.5 h-3.5" /> Photo {activePhotoIndex + 1} / {matar.gallery.length}
+                </div>
+              </div>
+
+              {/* Thumbnails Row */}
+              <div className="flex items-center gap-3 overflow-x-auto pb-2">
+                {matar.gallery.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActivePhotoIndex(idx)}
+                    className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 shrink-0 transition-all ${
+                      activePhotoIndex === idx
+                        ? 'border-[#FF4D17] scale-105 shadow-md shadow-[#FF4D17]/30'
+                        : 'border-[#2F333B] opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={img} alt={`Coach Matar ${idx + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
               </div>
             </div>
 

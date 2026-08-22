@@ -65,7 +65,11 @@ export const MOCK_COACHES = [
     bio: 'Fondateur et coach unique de Dialaw Fitness Center à Yenne. Matar combine rigueur athlétique, préparation physique et motivation constante pour vous guider vers vos objectifs.',
     avatar: '/images/coach-matar-1.jpg',
     gallery: [
-      '/images/coach-matar-1.jpg'
+      '/images/coach-matar-1.jpg',
+      '/images/coach-matar-3.jpg',
+      '/images/coach-matar-4.jpg',
+      '/images/coach-matar-5.jpg',
+      '/images/coach-matar-2.jpg'
     ],
     rating: 5.0,
     clientsCount: 180
