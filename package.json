@@ -12,6 +12,7 @@
     "preview": "node node_modules/vite/bin/vite.js preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "lucide-react": "^0.380.0",
