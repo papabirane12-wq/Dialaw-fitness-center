@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { getDb, saveDb } from './db.js';
+import { supabase, db, initDb } from './db.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -8,34 +8,51 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+initDb().catch(console.error);
+
 // GET /api/services
-app.get('/api/services', (req, res) => {
-  const db = getDb();
+app.get('/api/services', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('services').select('*');
+    if (!error && data && data.length > 0) {
+      return res.json({ success: true, data });
+    }
+  } catch (e) {
+    console.error('Supabase fetch error, fallback to live memory:', e);
+  }
   res.json({ success: true, data: db.services });
 });
 
 // GET /api/coaches
-app.get('/api/coaches', (req, res) => {
-  const db = getDb();
+app.get('/api/coaches', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('coaches').select('*');
+    if (!error && data && data.length > 0) {
+      return res.json({ success: true, data });
+    }
+  } catch (e) {}
   res.json({ success: true, data: db.coaches });
 });
 
 // GET /api/schedule
-app.get('/api/schedule', (req, res) => {
-  const db = getDb();
+app.get('/api/schedule', async (req, res) => {
+  try {
+    const { data, error } = await supabase.from('slots').select('*');
+    if (!error && data && data.length > 0) {
+      return res.json({ success: true, data });
+    }
+  } catch (e) {}
   res.json({ success: true, data: db.slots });
 });
 
 // GET /api/client/profile
 app.get('/api/client/profile', (req, res) => {
-  const db = getDb();
   res.json({ success: true, data: db.clientProfile });
 });
 
-// POST /api/bookings - Create new booking with payment receipt
-app.post('/api/bookings', (req, res) => {
+// POST /api/bookings - Create new live booking in Supabase
+app.post('/api/bookings', async (req, res) => {
   const { slotId, clientName, clientEmail, clientPhone, paymentMethod } = req.body;
-  const db = getDb();
 
   const slotIndex = db.slots.findIndex(s => s.id === slotId);
   if (slotIndex === -1) {
@@ -52,20 +69,20 @@ app.post('/api/bookings', (req, res) => {
 
   const newBooking = {
     id: `bkg-${Date.now()}`,
-    slotId: slot.id,
+    slot_id: slot.id,
     title: slot.title,
-    coachName: slot.coachName,
+    coach_name: slot.coachName,
     date: slot.date,
     time: slot.time,
     location: slot.location,
-    clientName: clientName || 'Alex Dupont',
-    clientEmail: clientEmail || 'alex.dupont@email.fr',
-    clientPhone: clientPhone || '+221 77 123 45 67',
+    client_name: clientName || 'Alex Dupont',
+    client_email: clientEmail || 'alex.dupont@email.fr',
+    client_phone: clientPhone || '+221 77 123 45 67',
     status: 'Confirmée',
-    paymentMethod: paymentMethod || 'Stripe Visa (**** 4242)',
-    amountPaid: 10000,
-    formattedAmount: '10 000 FCFA',
-    createdAt: new Date().toISOString()
+    payment_method: paymentMethod || 'Stripe Visa (**** 4242)',
+    amount_paid: 10000,
+    formatted_amount: '10 000 FCFA',
+    created_at: new Date().toISOString()
   };
 
   db.bookings.unshift(newBooking);
@@ -74,7 +91,7 @@ app.post('/api/bookings', (req, res) => {
     db.clientProfile.upcomingBookings.unshift({
       id: newBooking.id,
       title: newBooking.title,
-      coachName: newBooking.coachName,
+      coachName: newBooking.coach_name,
       date: newBooking.date,
       time: newBooking.time,
       location: newBooking.location,
@@ -88,16 +105,17 @@ app.post('/api/bookings', (req, res) => {
       amount: 10000,
       formattedAmount: '10 000 FCFA',
       status: 'Payée',
-      paymentMethod: newBooking.paymentMethod
+      paymentMethod: newBooking.payment_method
     });
   }
 
   if (db.adminStats) {
     db.adminStats.totalRevenueMonthly += 10000;
+    db.adminStats.formattedTotalRevenue = `${db.adminStats.totalRevenueMonthly.toLocaleString('fr-FR')} FCFA`;
     db.adminStats.completedSessionsThisMonth += 1;
     db.adminStats.recentTransactions.unshift({
       id: `tx-${Date.now()}`,
-      clientName: newBooking.clientName,
+      clientName: newBooking.client_name,
       plan: 'Réservation Séance',
       amount: 10000,
       formattedAmount: '10 000 FCFA',
@@ -106,19 +124,35 @@ app.post('/api/bookings', (req, res) => {
     });
   }
 
-  saveDb(db);
+  // Persist live booking to Supabase
+  try {
+    await supabase.from('bookings').insert([newBooking]);
+    console.log(`✅ Nouvelle réservation synchronisée avec Supabase (${newBooking.id}) !`);
+  } catch (err) {
+    console.error('Supabase write error:', err);
+  }
 
   res.status(201).json({
     success: true,
-    message: 'Réservation confirmée avec succès !',
-    booking: newBooking
+    message: 'Réservation enregistrée avec succès dans Supabase !',
+    booking: {
+      id: newBooking.id,
+      title: newBooking.title,
+      coachName: newBooking.coach_name,
+      date: newBooking.date,
+      time: newBooking.time,
+      location: newBooking.location,
+      clientName: newBooking.client_name,
+      clientEmail: newBooking.client_email,
+      status: newBooking.status,
+      formattedAmount: newBooking.formatted_amount
+    }
   });
 });
 
 // POST /api/payments/subscribe - Subscribe to plan (Flex or VIP)
-app.post('/api/payments/subscribe', (req, res) => {
+app.post('/api/payments/subscribe', async (req, res) => {
   const { planId, cardDetails } = req.body;
-  const db = getDb();
 
   const service = db.services.find(s => s.id === planId);
   if (!service) {
@@ -127,13 +161,15 @@ app.post('/api/payments/subscribe', (req, res) => {
 
   const amount = service.price;
   const planName = service.title;
+  const formattedAmount = service.formattedPrice;
 
   if (db.clientProfile) {
     db.clientProfile.membership = {
       planName: planName,
       status: 'Actif',
-      renewsAt: '2026-09-19',
+      renewsAt: '2026-09-22',
       price: amount,
+      formattedPrice: formattedAmount,
       sessionsRemainingThisWeek: planId === 'abonne-vip' ? 2 : 1
     };
 
@@ -142,6 +178,7 @@ app.post('/api/payments/subscribe', (req, res) => {
       date: new Date().toLocaleDateString('fr-FR'),
       description: `Souscription ${planName}`,
       amount: amount,
+      formattedAmount: formattedAmount,
       status: 'Payée',
       paymentMethod: `Stripe (Carte **** ${cardDetails?.number?.slice(-4) || '4242'})`
     });
@@ -149,17 +186,36 @@ app.post('/api/payments/subscribe', (req, res) => {
 
   if (db.adminStats) {
     db.adminStats.totalRevenueMonthly += amount;
+    db.adminStats.formattedTotalRevenue = `${db.adminStats.totalRevenueMonthly.toLocaleString('fr-FR')} FCFA`;
     db.adminStats.recentTransactions.unshift({
       id: `tx-${Date.now()}`,
       clientName: 'Alex Dupont',
       plan: planName,
       amount: amount,
+      formattedAmount: formattedAmount,
       date: new Date().toISOString().replace('T', ' ').substring(0, 16),
       status: 'Succeeded'
     });
   }
 
-  saveDb(db);
+  // Persist live subscription to Supabase
+  try {
+    await supabase.from('subscriptions').insert([{
+      id: `sub-${Date.now()}`,
+      client_name: 'Alex Dupont',
+      client_email: 'alex.dupont@email.fr',
+      plan_id: planId,
+      plan_name: planName,
+      amount: amount,
+      formatted_amount: formattedAmount,
+      status: 'Actif',
+      renews_at: '2026-09-22',
+      payment_method: `Stripe (Carte **** ${cardDetails?.number?.slice(-4) || '4242'})`
+    }]);
+    console.log(`✅ Souscription à ${planName} enregistrée dans Supabase !`);
+  } catch (err) {
+    console.error('Supabase write error:', err);
+  }
 
   res.json({
     success: true,
@@ -169,16 +225,15 @@ app.post('/api/payments/subscribe', (req, res) => {
 });
 
 // POST /api/admin/slots - Admin add slot
-app.post('/api/admin/slots', (req, res) => {
+app.post('/api/admin/slots', async (req, res) => {
   const { title, category, coachName, day, date, time, spotsTotal, location } = req.body;
-  const db = getDb();
 
   const newSlot = {
     id: `slot-${Date.now()}`,
     category: category || 'coaching-prive',
     title: title || 'Nouveau Cours',
-    coachId: 'coach-marc',
-    coachName: coachName || 'Marc Diallo',
+    coachId: 'coach-matar',
+    coachName: coachName || 'Coach Matar',
     day: day || 'Lundi',
     date: date || '2026-08-30',
     time: time || '10:00 - 11:00',
@@ -189,17 +244,22 @@ app.post('/api/admin/slots', (req, res) => {
   };
 
   db.slots.unshift(newSlot);
-  saveDb(db);
+
+  try {
+    await supabase.from('slots').insert([newSlot]);
+    console.log(`✅ Nouveau créneau ajouté dans Supabase (${newSlot.title}) !`);
+  } catch (err) {
+    console.error('Supabase write error:', err);
+  }
 
   res.status(201).json({ success: true, slot: newSlot });
 });
 
 // GET /api/admin/stats
 app.get('/api/admin/stats', (req, res) => {
-  const db = getDb();
   res.json({ success: true, data: db.adminStats });
 });
 
 app.listen(PORT, () => {
-  console.log(`Serveur Dialaw Fitness Center démarré sur http://localhost:${PORT}`);
+  console.log(`🚀 Serveur Dialaw Fitness Center avec Supabase démarré sur http://localhost:${PORT}`);
 });

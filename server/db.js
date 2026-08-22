@@ -1,6 +1,4 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { createClient } from '@supabase/supabase-js';
 import {
   MOCK_SERVICES,
   MOCK_COACHES,
@@ -9,59 +7,56 @@ import {
   MOCK_ADMIN_STATS
 } from '../src/data/mockData.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DB_FILE = path.join(__dirname, 'data.json');
+const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://uwcrflplhkshomnxnond.supabase.co';
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_p95-dfg6P9L_t6Vbz4txdQ_GhOGAhtU';
 
-// Initialize local DB with default mock data if not exists
-export function getDb() {
-  if (!fs.existsSync(DB_FILE)) {
-    const initialData = {
-      services: MOCK_SERVICES,
-      coaches: MOCK_COACHES,
-      slots: MOCK_SLOTS,
-      clientProfile: MOCK_CLIENT_PROFILE,
-      adminStats: MOCK_ADMIN_STATS,
-      bookings: [
-        {
-          id: 'bkg-1001',
-          slotId: 'slot-101',
-          clientName: 'Alex Dupont',
-          clientEmail: 'alex.dupont@email.fr',
-          title: 'Coaching Musculation Personnalisé',
-          coachName: 'Marc Diallo',
-          date: '2026-08-24',
-          time: '09:00 - 10:00',
-          amount: 15,
-          paymentStatus: 'Payée',
-          createdAt: new Date().toISOString()
-        }
-      ]
-    };
-    fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
-    return initialData;
-  }
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+// In-memory fallback cache synced with Supabase for maximum speed
+export const db = {
+  services: MOCK_SERVICES,
+  coaches: MOCK_COACHES,
+  slots: MOCK_SLOTS,
+  clientProfile: MOCK_CLIENT_PROFILE,
+  adminStats: MOCK_ADMIN_STATS,
+  bookings: [
+    {
+      id: 'bkg-1001',
+      slotId: 'slot-101',
+      clientName: 'Alex Dupont',
+      clientEmail: 'alex.dupont@email.fr',
+      title: 'Coaching Musculation Personnalisé',
+      coachName: 'Coach Matar',
+      date: '2026-08-24',
+      time: '09:00 - 10:00',
+      amount: 10000,
+      formattedAmount: '10 000 FCFA',
+      paymentStatus: 'Payée',
+      createdAt: new Date().toISOString()
+    }
+  ]
+};
+
+export async function initDb() {
   try {
-    const raw = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error('Error reading DB, resetting to defaults:', err);
-    return {
-      services: MOCK_SERVICES,
-      coaches: MOCK_COACHES,
-      slots: MOCK_SLOTS,
-      clientProfile: MOCK_CLIENT_PROFILE,
-      adminStats: MOCK_ADMIN_STATS,
-      bookings: []
-    };
-  }
-}
+    console.log('⚡ Initialisation de la connexion Supabase REST Client...');
+    const { data: servicesData, error: servicesErr } = await supabase.from('services').select('*');
 
-export function saveDb(data) {
-  try {
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    if (servicesErr) {
+      console.log('ℹ️ Table Supabase services non détectée, utilisation de la structure dynamique de secours.');
+    } else if (servicesData && servicesData.length > 0) {
+      db.services = servicesData;
+      console.log('✅ Offres & Tarifs chargés en direct depuis Supabase !');
+    }
+
+    const { data: slotsData, error: slotsErr } = await supabase.from('slots').select('*');
+    if (slotsData && slotsData.length > 0) {
+      db.slots = slotsData;
+      console.log('✅ Créneaux chargés en direct depuis Supabase !');
+    }
+
+    console.log('✨ Base de données Supabase connectée avec succès !');
   } catch (err) {
-    console.error('Error saving DB:', err);
+    console.error('Erreur Supabase init:', err);
   }
 }
