@@ -182,14 +182,14 @@ export default function Home({ setActivePage }) {
             </button>
           </div>
 
-          {/* Photo 4 Spotlight (Outdoor/Beach Conditioning), Photos 1, 2, 3, 5 removed from this section */}
+          {/* Photo 4 Spotlight (Outdoor/Beach Conditioning) — Head to Toe Full Display */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-6">
-              <div className="relative rounded-2xl overflow-hidden h-[450px] border border-[#2F333B] shadow-2xl">
+              <div className="relative rounded-2xl overflow-hidden bg-[#181A1E] border border-[#2F333B] shadow-2xl flex items-center justify-center p-2 min-h-[500px]">
                 <img
                   src="/images/coach-matar-5.jpg"
                   alt="Coach Matar — Préparation Physique & Conditioning"
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full max-h-[540px] object-contain rounded-xl"
                 />
               </div>
             </div>
