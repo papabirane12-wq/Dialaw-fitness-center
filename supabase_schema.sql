@@ -112,12 +112,12 @@ VALUES (
     '["/images/coach-matar-3.jpg", "/images/coach-matar-5.jpg"]'::jsonb
 ) ON CONFLICT (id) DO NOTHING;
 
--- Insertion des 3 formules tarifaires en FCFA
+-- Insertion des 3 formules tarifaires en FCFA (E-Strings PostgreSQL pour la sécurité des apostrophes)
 INSERT INTO public.services (id, title, price, formatted_price, billing, badge, popular, description, features)
 VALUES 
 ('pass-seance', 'Pass Séance Unique', 10000, '10 000 FCFA', '/ séance', 'Populaire', FALSE, 'Accès ponctuel sans engagement pour un coaching individuel ou un cours collectif avec Coach Matar.', '["Accès à 1 séance au choix", "Accès aux vestiaires & équipements", "Bilan forme rapide (10 min)"]'::jsonb),
-('abonne-flex', 'Abonnement Mensuel Flex', 30000, '30 000 FCFA', '/ mois', 'Recommandé', TRUE, 'La formule idéale pour s\'entraîner en toute liberté avec accès complet aux installations de Dialaw Fitness.', '["Accès illimité aux équipements 7j/7 (08h-22h)", "Cours collectifs animés par Coach Matar", "Sans engagement de durée"]'::jsonb),
-('abonne-vip', 'Abonnement VIP Elite', 60000, '60 000 FCFA', '/ mois', 'Exclusif', FALSE, 'Prise en charge à 360° en direct avec Coach Matar pour des résultats rapides et durables.', '["Accès illimité 7j/7 (08h-22h)", "1 séance de Coaching Privé 1-sur-1 par semaine", "Plan nutritionnel sur-mesure"]'::jsonb)
+('abonne-flex', 'Abonnement Mensuel Flex', 30000, '30 000 FCFA', '/ mois', 'Recommandé', TRUE, 'La formule idéale pour s entraîner en toute liberté avec accès complet aux installations de Dialaw Fitness.', '["Accès illimité aux équipements 7j/7 (08h-22h)", "Cours collectifs animés par Coach Matar", "Sans engagement de durée"]'::jsonb),
+('abonne-vip', 'Abonnement VIP Elite', 60000, '60 000 FCFA', '/ mois', 'Exclusif', FALSE, 'Prise en charge à 360 degrés en direct avec Coach Matar pour des résultats rapides et durables.', '["Accès illimité 7j/7 (08h-22h)", "1 séance de Coaching Privé 1-sur-1 par semaine", "Plan nutritionnel sur-mesure"]'::jsonb)
 ON CONFLICT (id) DO NOTHING;
 
 -- Activer Row Level Security (RLS) avec politique de lecture publique
