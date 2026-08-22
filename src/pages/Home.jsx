@@ -72,13 +72,13 @@ export default function Home({ setActivePage }) {
 
             </div>
 
-            {/* Hero Visual Card — Real Photo of Coach Matar at Squat Rack */}
+            {/* Hero Visual Card — Real Photo of Coach Matar in Dialaw Fitness Gym */}
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-3xl overflow-hidden border border-[#2F333B] shadow-2xl group">
                 <img
-                  src="/images/coach-matar-1.jpg"
+                  src="/images/coach-matar-3.jpg"
                   alt="Coach Matar à Dialaw Fitness Center Yenne"
-                  className="w-full h-[520px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-[520px] object-cover object-top group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121315] via-transparent to-transparent"></div>
 
